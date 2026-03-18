@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "seatbelt"
+version = "0.1.0"
+description = "Responsible AI auditing for LLMs and SLMs — deception, fairness, sociotechnical risk, regulatory compliance"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Your Name", email = "you@yourdomain.com" }]
+keywords = [
+    "responsible-ai", "ai-safety", "llm-evaluation", "fairness",
+    "bias-detection", "ai-audit", "sycophancy", "eu-ai-act"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.9"
+
+# Zero required dependencies for the core library.
+# This is a deliberate choice: any developer should be able to
+# pip install seatbelt and run it immediately, regardless of their stack.
+dependencies = []
+
+[project.optional-dependencies]
+openai = ["openai>=1.0"]
+huggingface = ["transformers>=4.30", "torch>=2.0"]
+all = ["openai>=1.0", "transformers>=4.30", "torch>=2.0"]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov",
+    "black",
+    "ruff",
+    "mypy",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/seatbelt"
+Documentation = "https://seatbelt.readthedocs.io"
+Repository = "https://github.com/yourusername/seatbelt"
+"Bug Tracker" = "https://github.com/yourusername/seatbelt/issues"
+
+[project.scripts]
+seatbelt = "seatbelt.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["seatbelt*"]
+
+[tool.black]
+line-length = 88
+target-version = ["py39"]
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=seatbelt --cov-report=term-missing"
