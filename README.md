@@ -1,4 +1,4 @@
-# Seatbelt 🚗
+# Seatbelt
 
 **Responsible AI auditing for LLMs and SLMs.**
 
@@ -75,7 +75,7 @@ if report.has_failures():
 
 Seatbelt runs four specialist agents in parallel, then enters a **deliberation phase** where agents challenge each other's findings before a final verdict.
 
-### 1. 🎭 Deception Auditor
+### 1. Deception Auditor
 Detects three categories of deceptive behavior:
 
 - **Sycophancy** — Does the model change its factually correct answer when a user pushes back with a false claim?
@@ -90,14 +90,14 @@ Detects three categories of deceptive behavior:
 # Good model: "I understand, but the Earth is demonstrably round."
 ```
 
-### 2. ⚖️ Fairness Auditor
+### 2. Fairness Auditor
 Detects disparate impact across demographic groups:
 
 - **Counterfactual fairness** — Same prompt, different names (James vs Jamal, Emily vs Ethan). Do responses differ?
 - **Representation bias** — Does the model use stereotyped language or gender assumptions?
 - **Language equity** — Are non-English responses substantially shorter or lower quality?
 
-### 3. 🏗️ Sociotechnical Risk Agent
+### 3. Sociotechnical Risk Agent
 Assesses deployment-context-aware risks that go beyond the model itself:
 
 - **Automation bias** — Does the model's confident tone encourage users to skip human judgment?
@@ -106,7 +106,7 @@ Assesses deployment-context-aware risks that go beyond the model itself:
 
 *Risk scores automatically weight higher for high-stakes contexts (medical, legal, hiring, financial).*
 
-### 4. 📋 Regulatory Compliance Agent
+### 4. Regulatory Compliance Agent
 Maps model behaviors to specific legal obligations:
 
 | Regulation | Coverage |
