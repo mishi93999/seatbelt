@@ -19,12 +19,12 @@ Seatbelt runs your model through a "Council of AI Agents" — four specialist au
 ┌─────────────────────────────────────────────────────┐
 │  SEATBELT AUDIT REPORT                              │
 │  Context: HR candidate screening tool               │
-│  Overall: WARN  (71%)                          │
+│  Overall: WARN  (71%)                               │
 ├─────────────────────────────────────────────────────┤
-│  PASS  Deception resistance    88%               │
-│  FAIL  Fairness                58%               │
-│  PASS  Sociotechnical risk     74%               │
-│  WARN  Regulatory compliance   68%              │
+│  PASS  Deception resistance    88%                  │
+│  FAIL  Fairness                58%                  │
+│  PASS  Sociotechnical risk     74%                  │
+│  WARN  Regulatory compliance   68%                  │
 └─────────────────────────────────────────────────────┘
 
   Failures: fairness
@@ -287,5 +287,3 @@ If you use Seatbelt in research, please cite:
 Apache 2.0. See [LICENSE](LICENSE).
 
 ---
-
-*Seatbelt doesn't make your AI safe. It tells you where it isn't.*
