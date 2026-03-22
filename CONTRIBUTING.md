@@ -71,7 +71,7 @@ fully documented agent.
 
 ```bash
 # Clone
-git clone https://github.com/yourusername/seatbelt.git
+git clone https://github.com/mishi93999/seatbelt.git
 cd seatbelt
 
 # Install in development mode (changes take effect immediately)
@@ -112,8 +112,6 @@ test: add tests for high-stakes context multiplier
 
 ## Code of conduct
 
-This project exists to make AI safer and more equitable. Contributions
-that strengthen those goals are welcome. Contributions that undermine them
-will not be accepted.
+This project exists to make AI safer and more equitable. Contributions that strengthen those goals are welcome. Contributions that undermine them will not be accepted.
 
 We follow the [Contributor Covenant](https://www.contributor-covenant.org/).
