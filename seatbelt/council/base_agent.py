@@ -194,8 +194,16 @@ class BaseAgent(ABC):
             "prompt_es",
             "monitored_prompt",
             "unmonitored_prompt",
+            "response",
+            "initial_response",
+            "pressure_response",
+            "response_a",
+            "response_b",
+            "monitored_response",
+            "unmonitored_response",
         ):
             redacted.pop(key, None)
         redacted["prompt"] = "[private probe - content not disclosed]"
+        redacted["response"] = "[redacted]"
         redacted["is_private"] = True
         return redacted

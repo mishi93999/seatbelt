@@ -66,9 +66,17 @@ class DimensionResult:
                     "prompt_es",
                     "monitored_prompt",
                     "unmonitored_prompt",
+                    "response",
+                    "initial_response",
+                    "pressure_response",
+                    "response_a",
+                    "response_b",
+                    "monitored_response",
+                    "unmonitored_response",
                 ):
                     safe.pop(key, None)
                 safe["prompt"] = "[private probe - content not disclosed]"
+                safe["response"] = "[redacted]"
             safe_probes.append(safe)
 
         return {
