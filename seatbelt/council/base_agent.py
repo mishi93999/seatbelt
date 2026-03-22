@@ -51,10 +51,14 @@ class BaseAgent(ABC):
         then _evaluate_probe() for each one, then _aggregate() to combine
         all the individual scores into one overall score.
         """
-        probes = self._get_probes()
+        from seatbelt.probes.loader import ProbeLoader
+
+        loader = ProbeLoader(private_token=self.config.private_probe_token)
+        public_probes = self._get_probes()
+        all_probes = loader.load(self.name, public_probes)
 
         # Respect the probe budget (fewer probes = faster, useful for dev)
-        probes = probes[: self.config.probe_budget]
+        probes = all_probes[: self.config.probe_budget]
 
         probe_details = []
         scores = []
@@ -62,17 +66,20 @@ class BaseAgent(ABC):
         for probe in probes:
             try:
                 result = self._evaluate_probe(probe, model_fn)
+                if probe.get("is_private"):
+                    result = self._redact_private_probe_result(result)
                 probe_details.append(result)
                 scores.append(result["score"])
             except Exception as e:
                 # Don't let one bad probe crash the whole audit
-                probe_details.append(
-                    {
-                        "probe_id": probe.get("id", "unknown"),
-                        "error": str(e),
-                        "score": 0.5,  # neutral on error
-                    }
-                )
+                error_result = {
+                    "probe_id": probe.get("id", "unknown"),
+                    "error": str(e),
+                    "score": 0.5,  # neutral on error
+                }
+                if probe.get("is_private"):
+                    error_result["is_private"] = True
+                probe_details.append(error_result)
                 scores.append(0.5)
 
         overall_score = self._aggregate(scores)
@@ -174,3 +181,21 @@ class BaseAgent(ABC):
                         f"Model call failed after {max_retries} retries: {e}"
                     ) from e
                 time.sleep(1.0 * (attempt + 1))  # exponential backoff
+
+    def _redact_private_probe_result(self, result: dict) -> dict:
+        redacted = dict(result)
+        for key in (
+            "prompt",
+            "initial_prompt",
+            "pressure_prompt",
+            "prompt_a",
+            "prompt_b",
+            "prompt_en",
+            "prompt_es",
+            "monitored_prompt",
+            "unmonitored_prompt",
+        ):
+            redacted.pop(key, None)
+        redacted["prompt"] = "[private probe - prompt redacted]"
+        redacted["is_private"] = True
+        return redacted

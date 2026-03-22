@@ -2,7 +2,7 @@
 
 **Responsible AI auditing for LLMs and SLMs.**
 
-Before you deploy your AI model, put Seatbelt on it.
+Make sure your AI models are safeguarded with seatbelts, buckle up!
 
 [![PyPI](https://img.shields.io/pypi/v/seatbelt)](https://pypi.org/project/seatbelt/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
@@ -254,7 +254,17 @@ model_fn = lambda prompt: your_custom_model.generate(prompt)
 - [ ] Community leaderboard (opt-in anonymized results by model family)
 
 ---
+## Probe tiers
 
+| Tier | Visibility | Count | Rotation |
+|------|------------|-------|----------|
+| Public | GitHub, readable by anyone | ~30% | Never (stable reference) |
+| Private | Separate repo, token required | ~70% | Monthly |
+
+Public probes show the community exactly what dimensions Seatbelt 
+tests and how. Private probes prevent gaming.
+
+---
 ## Contributing
 
 We welcome contributions! Areas we especially need help with:

@@ -67,6 +67,9 @@ class AuditConfig:
     # Max probes per dimension (reduce for faster runs during development)
     probe_budget: int = 50
 
+    # Optional token for loading private probe suites
+    private_probe_token: str | None = None
+
     # Verbose logging
     verbose: bool = False
 

@@ -52,6 +52,25 @@ class DimensionResult:
     probe_details: list[dict] = field(default_factory=list)
 
     def to_dict(self) -> dict:
+        safe_probes = []
+        for p in self.probe_details:
+            safe = dict(p)
+            if safe.get("is_private"):
+                for key in (
+                    "prompt",
+                    "initial_prompt",
+                    "pressure_prompt",
+                    "prompt_a",
+                    "prompt_b",
+                    "prompt_en",
+                    "prompt_es",
+                    "monitored_prompt",
+                    "unmonitored_prompt",
+                ):
+                    safe.pop(key, None)
+                safe["prompt"] = "[private probe - content not disclosed]"
+            safe_probes.append(safe)
+
         return {
             "dimension": self.dimension,
             "score": self.score,
@@ -62,6 +81,7 @@ class DimensionResult:
             "regulatory_citations": self.regulatory_citations,
             "remediation": self.remediation,
             "probe_count": len(self.probe_details),
+            "probe_details": safe_probes,
         }
 
 
@@ -192,6 +212,26 @@ class AuditReport:
                 f"{'─'*40}{RESET}"
             )
             sections.append(f"\n{dim.explanation}\n")
+
+            if dim.probe_details:
+                sections.append("  PROBE DETAILS:")
+                for probe in dim.probe_details:
+                    sections.append(f"\n    Probe ID: {probe.get('probe_id')}")
+                    sections.append(f"    Type:     {probe.get('type')}")
+                    sections.append(f"    Score:    {probe.get('score')}")
+                    sections.append(f"    Notes:    {probe.get('notes')}")
+
+                    if probe.get("is_private"):
+                        sections.append("    Prompt:   [private probe — content not disclosed]")
+                        sections.append("    Response: [redacted]")
+                    elif "initial_prompt" in probe:
+                        sections.append(f"    Q1:       {probe.get('initial_prompt')}")
+                        sections.append(f"    A1:       {probe.get('initial_response')}")
+                        sections.append(f"    Q2:       {probe.get('pressure_prompt')}")
+                        sections.append(f"    A2:       {probe.get('pressure_response')}")
+                    elif "prompt" in probe:
+                        sections.append(f"    Prompt:   {probe.get('prompt')}")
+                        sections.append(f"    Response: {probe.get('response')}")
 
             if dim.dissents:
                 sections.append("  COUNCIL DISSENTS:")
