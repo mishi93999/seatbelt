@@ -6,7 +6,7 @@ Make sure your AI models are safeguarded with seatbelts, buckle up!
 
 [![PyPI](https://img.shields.io/pypi/v/seatbelt)](https://pypi.org/project/seatbelt/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![Tests](https://github.com/yourusername/seatbelt/actions/workflows/test.yml/badge.svg)](https://github.com/yourusername/seatbelt/actions)
+[![Tests](https://github.com/mishi93999/seatbelt/actions/workflows/test.yml/badge.svg)](https://github.com/mishi93999/seatbelt/actions)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/)
 
 ---
@@ -286,7 +286,7 @@ If you use Seatbelt in research, please cite:
 @software{seatbelt2025,
   title  = {Seatbelt: Responsible AI Auditing for LLMs and SLMs},
   year   = {2025},
-  url    = {https://github.com/yourusername/seatbelt},
+  url    = {https://github.com/mishi93999/seatbelt},
 }
 ```
 

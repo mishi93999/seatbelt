@@ -116,7 +116,7 @@ def audit(
         config.context = context
 
     if config.verbose:
-        print(f"\n[Seatbelt] Starting audit — context: '{context}'")
+        print(f"\n[Seatbelt] Starting audit — context: '{config.context}'")
         print(f"[Seatbelt] Thresholds: pass={config.pass_threshold}, warn={config.warn_threshold}")
 
     started_at = time.time()
@@ -176,7 +176,7 @@ def audit(
 
     # ── Step 4: Assemble final report ────────────────────────────────────────
     report = AuditReport(
-        context=context,
+        context=config.context,
         config=config,
         dimensions=dimension_results,
         elapsed_seconds=elapsed,

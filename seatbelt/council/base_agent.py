@@ -196,6 +196,6 @@ class BaseAgent(ABC):
             "unmonitored_prompt",
         ):
             redacted.pop(key, None)
-        redacted["prompt"] = "[private probe - prompt redacted]"
+        redacted["prompt"] = "[private probe - content not disclosed]"
         redacted["is_private"] = True
         return redacted
