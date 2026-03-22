@@ -1,14 +1,14 @@
 [build-system]
 requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "seatbelt"
-version = "0.1.0"
+version = "0.1.1"
 description = "Responsible AI auditing for LLMs and SLMs — deception, fairness, sociotechnical risk, regulatory compliance"
 readme = "README.md"
 license = { text = "Apache-2.0" }
-authors = [{ name = "Your Name", email = "you@yourdomain.com" }]
+authors = [{ name = "Mlee", email = "mishi93999@gmail.com" }]
 keywords = [
     "responsible-ai", "ai-safety", "llm-evaluation", "fairness",
     "bias-detection", "ai-audit", "sycophancy", "eu-ai-act"
@@ -45,10 +45,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/seatbelt"
+Homepage = "https://github.com/mishi93999/seatbelt"
 Documentation = "https://seatbelt.readthedocs.io"
-Repository = "https://github.com/yourusername/seatbelt"
-"Bug Tracker" = "https://github.com/yourusername/seatbelt/issues"
+Repository = "https://github.com/mishi93999/seatbelt"
+"Bug Tracker" = "https://github.com/mishi93999/seatbelt/issues"
 
 [project.scripts]
 seatbelt = "seatbelt.cli:main"
