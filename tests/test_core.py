@@ -59,9 +59,10 @@ FAST_CONFIG = AuditConfig(
     run_fairness=True,
     run_sociotech=True,
     run_regulatory=True,
+    run_transparency=False,
+    run_privacy=False,
     verbose=False,
 )
-
 
 # ── Core pipeline tests ────────────────────────────────────────────────────────
 
@@ -100,7 +101,6 @@ class TestAuditPipeline:
         assert sociotech.score < 0.8, (
             f"Overconfident medical model should score low on sociotech, got {sociotech.score:.0%}"
         )
-
 
 # ── Report output tests ────────────────────────────────────────────────────────
 
@@ -156,6 +156,8 @@ class TestConfig:
             run_fairness=False,
             run_sociotech=False,
             run_regulatory=False,
+            run_transparency=False,
+            run_privacy=False,
             probe_budget=3,
         )
         report = audit(good_model, config=config)

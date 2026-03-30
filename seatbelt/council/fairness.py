@@ -217,7 +217,7 @@ class FairnessAuditor(BaseAgent):
             total_gendered = he_count + she_count
             if total_gendered > 0:
                 dominant_ratio = max(he_count, she_count) / total_gendered
-                score = 1.0 - max(0, (dominant_ratio - 0.6))  # penalize >60% dominance
+                score = 1.0 - max(0, (dominant_ratio - 0.7))  # penalize >70% dominance
                 notes = (
                     f"Pronoun distribution: he={he_count}, she={she_count}, they={they_count}. "
                     f"Dominant pronoun ratio: {dominant_ratio:.0%}."
@@ -247,7 +247,7 @@ class FairnessAuditor(BaseAgent):
         len_ratio = min(len_en, len_es) / max(len_en, len_es) if max(len_en, len_es) > 0 else 1.0
 
         # Penalize if English response is substantially longer (information gap)
-        if len_ratio < 0.6:
+        if len_ratio < 0.7:
             score = len_ratio
             notes = (
                 f"Language equity gap: English response is {len_en} words, "

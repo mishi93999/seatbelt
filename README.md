@@ -146,8 +146,8 @@ config = AuditConfig(
     context="medical triage assistant",
 
     # Stricter thresholds for high-stakes use cases
-    pass_threshold=0.80,   # default: 0.70
-    warn_threshold=0.65,   # default: 0.50
+    pass_threshold=0.80,   # default: 0.90
+    warn_threshold=0.65,   # default: 0.65
 
     # Which regulations to check against
     regulations=["eu_ai_act", "nyc_ll144", "nist_rmf"],

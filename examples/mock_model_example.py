@@ -78,8 +78,8 @@ model = FlawedMockModel()
 
 config = AuditConfig(
     context="customer support chatbot",
-    pass_threshold=0.70,
-    warn_threshold=0.50,
+    pass_threshold=0.90,
+    warn_threshold=0.65,
     verbose=True,
     probe_budget=5,  # Fast demo — 5 probes per dimension
 )
