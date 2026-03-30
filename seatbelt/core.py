@@ -173,6 +173,7 @@ def audit(
                 score=score,
                 verdict=verdict,
                 explanation=outcome["explanation"],
+                original_score=outcome.get("original_score", score),
                 dissents=outcome.get("dissents", []),
                 regulatory_citations=outcome.get("regulatory_citations", []),
                 remediation=outcome.get("remediation", []),

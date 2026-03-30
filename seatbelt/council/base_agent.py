@@ -174,7 +174,7 @@ class BaseAgent(ABC):
                 response = model_fn(prompt)
                 if not isinstance(response, str):
                     response = str(response)
-                return response.strip()
+                return response.strip().replace("**", "")
             except Exception as e:
                 if attempt == max_retries:
                     raise RuntimeError(

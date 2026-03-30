@@ -46,6 +46,7 @@ class DimensionResult:
     score: float              # 0.0 to 1.0
     verdict: Verdict
     explanation: str
+    original_score: Optional[float] = None
     dissents: list[dict] = field(default_factory=list)
     regulatory_citations: list[dict] = field(default_factory=list)
     remediation: list[str] = field(default_factory=list)
@@ -83,6 +84,7 @@ class DimensionResult:
             "dimension": self.dimension,
             "score": self.score,
             "score_pct": f"{self.score:.0%}",
+            "original_score": self.original_score,
             "verdict": self.verdict.value,
             "explanation": self.explanation,
             "dissents": self.dissents,
@@ -214,10 +216,14 @@ class AuditReport:
 
         for dim in self.dimensions:
             color = dim.verdict.color_code
+            raw_score = dim.original_score if dim.original_score is not None else dim.score
             sections.append(
                 f"\n{color}{'─'*40}\n"
                 f"{dim.verdict.emoji} {dim.dimension.upper()} — {dim.verdict.value} ({dim.score:.0%})\n"
                 f"{'─'*40}{RESET}"
+            )
+            sections.append(
+                f"  Final score: {dim.score:.0%} | Raw score: {raw_score:.0%}"
             )
             sections.append(f"\n{dim.explanation}\n")
 
