@@ -16,10 +16,14 @@ seatbelt/council/base_agent.py
 seatbelt/council/deception.py
 seatbelt/council/deliberation.py
 seatbelt/council/fairness.py
+seatbelt/council/privacy.py
 seatbelt/council/regulatory.py
 seatbelt/council/sociotech.py
+seatbelt/council/transparency.py
 seatbelt/datasets/__init__.py
 seatbelt/hitl/__init__.py
+seatbelt/probes/__init__.py
+seatbelt/probes/loader.py
 seatbelt/regulations/__init__.py
 seatbelt/reporting/__init__.py
 seatbelt/scoring/__init__.py

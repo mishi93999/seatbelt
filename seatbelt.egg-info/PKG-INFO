@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: seatbelt
-Version: 0.1.1
+Version: 0.1.2
 Summary: Responsible AI auditing for LLMs and SLMs — deception, fairness, sociotechnical risk, regulatory compliance
 Author-email: Mlee <mishi93999@gmail.com>
 License: Apache-2.0
@@ -43,11 +43,11 @@ Dynamic: license-file
 
 **Responsible AI auditing for LLMs and SLMs.**
 
-Before you deploy your AI model, put Seatbelt on it.
+Make sure your AI models are safeguarded with seatbelts, buckle up!
 
 [![PyPI](https://img.shields.io/pypi/v/seatbelt)](https://pypi.org/project/seatbelt/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![Tests](https://github.com/yourusername/seatbelt/actions/workflows/test.yml/badge.svg)](https://github.com/yourusername/seatbelt/actions)
+[![Tests](https://github.com/mishi93999/seatbelt/actions/workflows/test.yml/badge.svg)](https://github.com/mishi93999/seatbelt/actions)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/)
 
 ---
@@ -60,12 +60,12 @@ Seatbelt runs your model through a "Council of AI Agents" — four specialist au
 ┌─────────────────────────────────────────────────────┐
 │  SEATBELT AUDIT REPORT                              │
 │  Context: HR candidate screening tool               │
-│  Overall: ⚠️  WARN  (71%)                          │
+│  Overall: WARN  (71%)                               │
 ├─────────────────────────────────────────────────────┤
-│  ✅ PASS  Deception resistance    88%               │
-│  ❌ FAIL  Fairness                58%               │
-│  ✅ PASS  Sociotechnical risk     74%               │
-│  ⚠️  WARN  Regulatory compliance   68%              │
+│  PASS  Deception resistance    88%                  │
+│  FAIL  Fairness                58%                  │
+│  PASS  Sociotechnical risk     74%                  │
+│  WARN  Regulatory compliance   68%                  │
 └─────────────────────────────────────────────────────┘
 
   Failures: fairness
@@ -187,8 +187,8 @@ config = AuditConfig(
     context="medical triage assistant",
 
     # Stricter thresholds for high-stakes use cases
-    pass_threshold=0.80,   # default: 0.70
-    warn_threshold=0.65,   # default: 0.50
+    pass_threshold=0.80,   # default: 0.90
+    warn_threshold=0.65,   # default: 0.65
 
     # Which regulations to check against
     regulations=["eu_ai_act", "nyc_ll144", "nist_rmf"],
@@ -295,7 +295,17 @@ model_fn = lambda prompt: your_custom_model.generate(prompt)
 - [ ] Community leaderboard (opt-in anonymized results by model family)
 
 ---
+## Probe tiers
 
+| Tier | Visibility | Count | Rotation |
+|------|------------|-------|----------|
+| Public | GitHub, readable by anyone | ~30% | Never (stable reference) |
+| Private | Separate repo, token required | ~70% | Monthly |
+
+Public probes show the community exactly what dimensions Seatbelt 
+tests and how. Private probes prevent gaming.
+
+---
 ## Contributing
 
 We welcome contributions! Areas we especially need help with:
@@ -317,7 +327,7 @@ If you use Seatbelt in research, please cite:
 @software{seatbelt2025,
   title  = {Seatbelt: Responsible AI Auditing for LLMs and SLMs},
   year   = {2025},
-  url    = {https://github.com/yourusername/seatbelt},
+  url    = {https://github.com/mishi93999/seatbelt},
 }
 ```
 
@@ -328,5 +338,3 @@ If you use Seatbelt in research, please cite:
 Apache 2.0. See [LICENSE](LICENSE).
 
 ---
-
-*Seatbelt doesn't make your AI safe. It tells you where it isn't.*
