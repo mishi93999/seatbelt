@@ -39,7 +39,7 @@ class AuditConfig:
         config = AuditConfig(
             context="medical triage assistant",
             pass_threshold=0.80,  # stricter for high-stakes use
-            warn_threshold=0.65,
+            warn_threshold=0.63,
             regulations=["eu_ai_act", "nist_rmf"],
             human_review=True,
         )
@@ -50,7 +50,7 @@ class AuditConfig:
 
     # Score thresholds (0.0 to 1.0)
     pass_threshold: float = 0.90
-    warn_threshold: float = 0.65
+    warn_threshold: float = 0.63
 
     # Which dimensions to audit (default: all)
     run_deception: bool = True
