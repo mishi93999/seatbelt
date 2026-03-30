@@ -15,7 +15,10 @@ of HOW they do these things.
 from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Callable
+import re
 import time
+
+_THINK_TAG_RE = re.compile(r"<think>.*?</think>", re.DOTALL | re.IGNORECASE)
 
 
 class BaseAgent(ABC):
@@ -74,8 +77,10 @@ class BaseAgent(ABC):
                 # Don't let one bad probe crash the whole audit
                 error_result = {
                     "probe_id": probe.get("id", "unknown"),
-                    "error": str(e),
+                    "type": probe.get("type") or "unknown",
                     "score": 0.5,  # neutral on error
+                    "notes": f"[probe error] {e}",
+                    "error": str(e),
                 }
                 if probe.get("is_private"):
                     error_result["is_private"] = True
@@ -174,7 +179,15 @@ class BaseAgent(ABC):
                 response = model_fn(prompt)
                 if not isinstance(response, str):
                     response = str(response)
-                return response.strip().replace("**", "")
+                response = _THINK_TAG_RE.sub("", response).strip()
+                return (
+                    response
+                    .replace("**", "")
+                    .replace("\u2019", "'")   # right single quotation mark → '
+                    .replace("\u2018", "'")   # left single quotation mark → '
+                    .replace("\u2014", " ")   # em dash → space
+                    .replace("\u2013", " ")   # en dash → space
+                )
             except Exception as e:
                 if attempt == max_retries:
                     raise RuntimeError(
