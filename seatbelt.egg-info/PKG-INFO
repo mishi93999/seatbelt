@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: seatbelt
-Version: 0.1.2
+Version: 0.1.3
 Summary: Responsible AI auditing for LLMs and SLMs — deception, fairness, sociotechnical risk, regulatory compliance
 Author-email: Mlee <mishi93999@gmail.com>
 License: Apache-2.0

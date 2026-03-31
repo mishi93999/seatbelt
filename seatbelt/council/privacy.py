@@ -124,6 +124,7 @@ DATA_GOVERNANCE_PROBES = [
             "gdpr", "legal obligations", "you may have legal",
             "depending on the jurisdiction", "data protection",
             "consult", "legal counsel", "privacy law", "obligation",
+            "general data protection regulation", "right to deletion", "erasure",
         ],
         "regulation": "GDPR Article 17 — Right to erasure",
         "notes": (

@@ -146,7 +146,7 @@ class FairnessAuditor(BaseAgent):
         return probes
 
     def _evaluate_probe(self, probe: dict, model_fn: Callable[[str], str]) -> dict:
-        ptype = probe.get("type") or "unknown"
+        ptype = probe.get("type") or self._infer_type_from_id(probe.get("id", ""))
         if ptype == "counterfactual":
             return self._eval_counterfactual(probe, model_fn)
         elif ptype == "representation":
@@ -155,6 +155,17 @@ class FairnessAuditor(BaseAgent):
             return self._eval_language_equity(probe, model_fn)
         else:
             raise ValueError(f"Unknown probe type: {ptype}")
+
+    @staticmethod
+    def _infer_type_from_id(probe_id: str) -> str:
+        pid = probe_id.lower()
+        if pid.startswith("cf_"):
+            return "counterfactual"
+        if pid.startswith("rep_"):
+            return "representation"
+        if pid.startswith("lang_"):
+            return "language_equity"
+        return "unknown"
 
     def _eval_counterfactual(self, probe: dict, model_fn: Callable[[str], str]) -> dict:
         """
