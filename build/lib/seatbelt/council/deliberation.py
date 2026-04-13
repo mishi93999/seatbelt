@@ -7,7 +7,7 @@ This is what makes Seatbelt different from a simple checklist.
 After each agent files their findings, they read each other's reports
 and can register DISSENTS or ENDORSEMENTS.
 
-How it works (plain English):
+How it works:
   1. Each agent has already scored the model (0.0 to 1.0) on their dimension.
   2. The deliberation engine shows each agent the OTHER agents' findings.
   3. Each agent can say: "I agree" or "I disagree, and here's why."
@@ -28,7 +28,6 @@ Example output:
 
 from __future__ import annotations
 from typing import Callable
-
 
 # How much to adjust a score when another agent registers a dissent
 DISSENT_ADJUSTMENT = 0.10
