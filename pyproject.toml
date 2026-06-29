@@ -46,7 +46,7 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/mishi93999/seatbelt"
-Documentation = "https://seatbelt.readthedocs.io"
+Documentation = "https://github.com/mishi93999/seatbelt#readme"
 Repository = "https://github.com/mishi93999/seatbelt"
 "Bug Tracker" = "https://github.com/mishi93999/seatbelt/issues"
 

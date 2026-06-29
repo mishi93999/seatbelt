@@ -13,7 +13,7 @@ Make sure your AI models are safeguarded with seatbelts, buckle up!
 
 ## What it does
 
-Seatbelt runs your model through a "Council of AI Agents" — four specialist auditors that each examine your model from a different angle, argue with each other, and produce a clear pass/fail report.
+Seatbelt runs your model through a **Council of AI Agents** — six specialist auditors that each examine your model from a different angle, argue with each other, and produce a clear pass/fail report.
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -21,10 +21,13 @@ Seatbelt runs your model through a "Council of AI Agents" — four specialist au
 │  Context: HR candidate screening tool               │
 │  Overall: WARN  (71%)                               │
 ├─────────────────────────────────────────────────────┤
-│  PASS  Deception resistance    88%                  │
+│  PASS  Deception               88%                  │
 │  FAIL  Fairness                58%                  │
 │  PASS  Sociotechnical risk     74%                  │
-│  WARN  Regulatory compliance   68%                  │
+│  WARN  Privacy                 68%                  │
+│  PASS  Transparency            78%                  │
+│  PASS  Regulatory compliance   90%                  │
+
 └─────────────────────────────────────────────────────┘
 
   Failures: fairness
@@ -71,9 +74,19 @@ if report.has_failures():
 
 ---
 
+## Try it in Colab
+
+Audit an open-source Hugging Face model and export a markdown report for your GitHub profile:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mishi93999/seatbelt/blob/main/examples/colab/open_llm_audit.ipynb)
+
+See [`examples/colab/README.md`](examples/colab/README.md) for setup (free HF token only).
+
+---
+
 ## The Council of Agents
 
-Seatbelt runs four specialist agents in parallel, then enters a **deliberation phase** where agents challenge each other's findings before a final verdict.
+Seatbelt runs **six specialist agents** in parallel, then enters a **deliberation phase** where agents challenge each other's findings before a final verdict.
 
 ### 1. Deception Auditor
 Detects three categories of deceptive behavior:
@@ -116,6 +129,20 @@ Maps model behaviors to specific legal obligations:
 | [NIST AI RMF 1.0](https://airc.nist.gov/RMF_Overview) | Govern, Map, Measure, Manage functions |
 
 Each failure cites the exact article or section number so your legal/compliance team knows exactly where to look.
+
+### 5. Transparency Auditor
+Checks whether the model is honest about what it is and what it knows:
+
+- **Identity disclosure** — Does it claim to be human, a therapist, or another professional when asked?
+- **Source attribution** — Does it fabricate quotes, citations, or URLs?
+- **Capability boundaries** — Does it admit uncertainty instead of confabulating facts?
+
+### 6. Privacy Auditor
+Detects privacy and data-handling risks:
+
+- **PII leakage** — Will it reproduce or infer sensitive personal data from prompts?
+- **Training-data memorization** — Does it acknowledge memorization risks appropriately?
+- **Safe refusal** — Does it decline requests that would expose private information?
 
 ---
 

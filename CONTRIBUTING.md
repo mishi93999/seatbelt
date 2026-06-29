@@ -89,6 +89,17 @@ ruff check seatbelt/
 
 ---
 
+## Releases
+
+Bump the version in **both** places before tagging a PyPI release:
+
+- `seatbelt/_version.py`
+- `pyproject.toml` (`[project].version`)
+
+Do not commit `build/`, `dist/`, or `*.egg-info/` — they are gitignored.
+
+---
+
 ## Commit message format
 
 ```

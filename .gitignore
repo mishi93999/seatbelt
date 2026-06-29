@@ -3,3 +3,30 @@ PUBLISHING.md
 **/.DS_Store
 __pycache__/
 *.pyc
+
+# Build / packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# Python virtual environments
+.venv/
+venv/
+
+# Test / coverage artifacts
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Local audit outputs and precomputed analysis (never commit)
+local_outputs/
+
+# Ad-hoc audit exports (notebook / CLI runs in repo root)
+seatbelt_audit.json
+seatbelt_audit.md
+seatbelt_about_snippet.json
+seatbelt_validation_results.json
+seatbelt_validation_diagnostics.json
+results_partial.json
+results_table.tex
+*_audit.md

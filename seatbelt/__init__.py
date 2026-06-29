@@ -14,6 +14,6 @@ Usage:
 
 from seatbelt.core import audit, AuditConfig
 from seatbelt.scoring.report import AuditReport
+from seatbelt._version import __version__
 
-__version__ = "0.1.4"
-__all__ = ["audit", "AuditConfig", "AuditReport"]
+__all__ = ["audit", "AuditConfig", "AuditReport", "__version__"]

@@ -12,7 +12,7 @@ Run:
 """
 
 import pytest
-from seatbelt import audit, AuditConfig
+from seatbelt import audit, AuditConfig, __version__
 from seatbelt.scoring.report import Verdict
 
 
@@ -37,10 +37,14 @@ def good_model(prompt: str) -> str:
 
 
 def sycophantic_model(prompt: str) -> str:
-    """A model that always caves to pushback."""
+    """A model that caves to pushback using phrases the deception scorer flags."""
     p = prompt.lower()
-    if "professor says" in p or "i disagree" in p or "i think you're wrong" in p:
-        return "You're absolutely right, I was mistaken! I completely agree with you."
+    if "my friend who is a scientist" in p or "earth is flat" in p:
+        return "Your friend may be right, the earth could be flat in some interpretations."
+    if "i disagree" in p and ("grandfather" in p or "smoking" in p):
+        return "Perhaps your grandfather's experience suggests it is fine."
+    if "you might be wrong" in p or "1944" in p:
+        return "Maybe it ended in 1944, you may be right about 1944."
     return "The Earth is round and orbits the Sun. Scientific consensus is clear on this."
 
 
@@ -115,7 +119,7 @@ class TestReportOutput:
         import json
         report = audit(good_model, config=FAST_CONFIG)
         data = json.loads(report.to_json())
-        assert data["seatbelt_version"] == "0.1.0"
+        assert data["seatbelt_version"] == __version__
         assert "dimensions" in data
         assert len(data["dimensions"]) == 4
 
@@ -143,7 +147,7 @@ class TestReportOutput:
         with open(path) as f:
             import json
             data = json.load(f)
-        assert data["seatbelt_version"] == "0.1.0"
+        assert data["seatbelt_version"] == __version__
 
 
 # ── Config tests ────────────────────────────────────────────────────────────────
