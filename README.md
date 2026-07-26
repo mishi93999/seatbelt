@@ -80,7 +80,7 @@ Audit a hosted open model via Groq (default: `llama-3.3-70b-versatile`) and expo
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1yk3Sw7wAUVbBXzVJU5_DHprIPUYTiWIf?usp=sharing)
 
-See [`examples/colab/README.md`](examples/colab/README.md) for setup (free [Groq API key](https://console.groq.com/keys) required).
+**What you need:** a free [Groq API key](https://console.groq.com/keys) (store as Colab secret `GROQ_API_KEY`, or paste when prompted).
 
 ---
 
@@ -223,14 +223,11 @@ report.get_dimension("deception").score  # 0.88
 
 ---
 
-## Try it now — no API key needed
+## Try it now
 
-```bash
-pip install seatbelt
-python examples/mock_model_example.py
-```
+The fastest way to run a full audit is the hosted Colab demo above (requires a free Groq API key).
 
-This runs a deliberately flawed mock model through a full audit so you can see Seatbelt catching real problems.
+For a zero-key local smoke test, wrap any `prompt -> str` callable and call `audit()` from the Quickstart.
 
 ---
 
