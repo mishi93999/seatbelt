@@ -49,18 +49,33 @@ No API key required for the core audit. Seatbelt works with any callable that ta
 
 ## Quickstart
 
+Wrap your model as `model_fn(prompt: str) -> str`, then call `audit()`:
+
 ```python
-from seatbelt import audit
+import os
+from groq import Groq
+from seatbelt import audit, AuditConfig
 
-# Wrap your model as a simple function: string in, string out.
-# Works with OpenAI, HuggingFace, Ollama, your own fine-tune — anything.
-def my_model(prompt: str) -> str:
-    return my_llm.generate(prompt)
+client = Groq(api_key=os.environ["GROQ_API_KEY"])
+MODEL_ID = "llama-3.3-70b-versatile"
 
-# Run the audit
-report = audit(my_model, context="customer support chatbot")
+def model_fn(prompt: str) -> str:
+    response = client.chat.completions.create(
+        model=MODEL_ID,
+        messages=[{"role": "user", "content": prompt}],
+        max_tokens=512,
+        temperature=0.0,
+        seed=42,  # reproducibility where the API supports it
+    )
+    return response.choices[0].message.content
 
-# See results
+config = AuditConfig(
+    context="general purpose open-source assistant",
+    probe_budget=15,
+    verbose=True,
+)
+
+report = audit(model_fn=model_fn, config=config)
 print(report.summary())
 
 # Save to file
@@ -72,15 +87,17 @@ if report.has_failures():
     raise SystemExit("Audit failed — do not deploy.")
 ```
 
+Any callable works — OpenAI, Anthropic, Hugging Face, Ollama, or your own fine-tune. See [Supported model interfaces](#supported-model-interfaces).
+
 ---
 
 ## Try it in Colab
 
-Audit a hosted open model via Groq (default: `llama-3.3-70b-versatile`) and export a markdown report for your GitHub profile:
+Audit an open model (Groq-hosted Llama) and inspect the full scorecard + probe-level results:
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1yk3Sw7wAUVbBXzVJU5_DHprIPUYTiWIf?usp=sharing)
 
-**What you need:** a free [Groq API key](https://console.groq.com/keys) (store as Colab secret `GROQ_API_KEY`, or paste when prompted).
+**Setup:** add a free [Groq API key](https://console.groq.com/keys) as `GROQ_API_KEY` in Colab Secrets (or paste when prompted). Default run uses `probe_budget=15` (~a few minutes).
 
 ---
 
@@ -170,11 +187,11 @@ from seatbelt import audit, AuditConfig
 
 config = AuditConfig(
     # What is this model used for? Affects risk weighting.
-    context="medical triage assistant",
+    context="general purpose open-source assistant",
 
-    # Stricter thresholds for high-stakes use cases
-    pass_threshold=0.80,   # default: 0.90
-    warn_threshold=0.63,   # default: 0.63
+    # Score thresholds (defaults shown)
+    pass_threshold=0.90,   # >= PASS
+    warn_threshold=0.63,   # >= WARN, else FAIL
 
     # Which regulations to check against
     regulations=["eu_ai_act", "nyc_ll144", "nist_rmf"],
@@ -187,13 +204,16 @@ config = AuditConfig(
     run_transparency=True,
     run_privacy=True,
 
-    # Reduce probe count for faster CI / Colab runs
-    probe_budget=20,  # default: 50; Colab demo uses 15
+    # Max probes per dimension (lower = faster; Colab demo uses 15)
+    probe_budget=15,  # default: 50
+
+    # Optional: load private probe suites
+    # private_probe_token=os.environ["SEATBELT_PRIVATE_TOKEN"],
 
     verbose=True,
 )
 
-report = audit(model_fn=my_model, config=config)
+report = audit(model_fn=model_fn, config=config)
 ```
 
 ---
@@ -213,28 +233,42 @@ report.save("audit.json")
 # Markdown (for PRs, README, documentation)
 report.save("audit.md")
 
+# Probe-level breakdown (same structure as the Colab demo)
+for dim in report.to_dict()["dimensions"]:
+    print(f"{dim['dimension']}: {dim['score_pct']} ({dim['verdict']})")
+    for probe in dim.get("probe_details", []):
+        print(f"  {probe.get('probe_id')}  score={probe.get('score')}")
+
 # Programmatic checks
 report.passed()               # True if all dimensions PASS
 report.has_failures()         # True if any dimension FAIL
 report.failed_dimensions()    # ["fairness", "regulatory"]
-report.overall_score()        # 0.71
-report.get_dimension("deception").score  # 0.88
+report.overall_score()        # 0.86
+report.get_dimension("deception").score  # 0.91
 ```
 
 ---
 
 ## Try it now
 
-The fastest way to run a full audit is the hosted Colab demo above (requires a free Groq API key).
+Fastest path — open the working Colab demo (Groq + Llama 3.3 70B):
 
-For a zero-key local smoke test, wrap any `prompt -> str` callable and call `audit()` from the Quickstart.
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1yk3Sw7wAUVbBXzVJU5_DHprIPUYTiWIf?usp=sharing)
+
+Or locally:
+
+```bash
+pip install seatbelt groq
+# export GROQ_API_KEY=...
+# then run the Quickstart snippet above
+```
 
 ---
 
 ## Supported model interfaces
 
 ```python
-# Groq (used in the Colab demo)
+# Groq (used in the Colab demo / paper-style open-model runs)
 from groq import Groq
 client = Groq()
 model_fn = lambda p: client.chat.completions.create(
@@ -242,6 +276,7 @@ model_fn = lambda p: client.chat.completions.create(
     messages=[{"role": "user", "content": p}],
     max_tokens=512,
     temperature=0.0,
+    seed=42,
 ).choices[0].message.content
 
 # OpenAI
@@ -273,28 +308,11 @@ model_fn = lambda prompt: your_custom_model.generate(prompt)
 ```
 
 ---
-
-## Roadmap
-
-- [x] Deception auditor (sycophancy, reward hacking, subterfuge)
-- [x] Fairness auditor (counterfactual, representation, language equity)
-- [x] Sociotechnical risk agent (context-aware)
-- [x] Regulatory compliance agent (EU AI Act, NYC LL144, NIST RMF)
-- [x] Deliberation engine (cross-agent critique)
-- [ ] v0.2: LLM-powered deliberation critique (richer natural language dissents)
-- [ ] v0.2: Embedding-based consistency scoring (replace Jaccard similarity)
-- [ ] v0.2: W&B / MLflow integration for longitudinal tracking
-- [ ] v0.3: Human-in-the-loop adjudication UI
-- [ ] v0.3: Colorado SB21-169 (insurance) and Canada Bill C-27
-- [ ] v0.4: AI lifecycle auditing (design, training, deployment)
-- [ ] Community leaderboard (opt-in anonymized results by model family)
-
----
 ## Probe tiers
 
 | Tier | Visibility | Count | Rotation |
 |------|------------|-------|----------|
-| Public | GitHub, readable by anyone | ~30% | Never (stable reference) |
+| Public | GitHub, readable by anyone | ~30% | Monthly (stable reference) |
 | Private | Separate repo, token required | ~70% | Monthly |
 
 Public probes show the community exactly what dimensions Seatbelt 
@@ -319,9 +337,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 If you use Seatbelt in research, please cite:
 
 ```bibtex
-@software{seatbelt2025,
+@software{seatbelt2026,
   title  = {Seatbelt: Responsible AI Auditing for LLMs and SLMs},
-  year   = {2025},
+  year   = {2026},
   url    = {https://github.com/o-rai/seatbelt},
 }
 ```
@@ -331,5 +349,3 @@ If you use Seatbelt in research, please cite:
 ## License
 
 Apache 2.0. See [LICENSE](LICENSE).
-
----
