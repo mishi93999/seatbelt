@@ -71,7 +71,7 @@ fully documented agent.
 
 ```bash
 # Clone
-git clone https://github.com/mishi93999/seatbelt.git
+git clone https://github.com/o-rai/seatbelt.git
 cd seatbelt
 
 # Install in development mode (changes take effect immediately)
