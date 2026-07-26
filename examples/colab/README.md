@@ -4,7 +4,7 @@
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1yk3Sw7wAUVbBXzVJU5_DHprIPUYTiWIf?usp=sharing)
 
-Run a Seatbelt audit on an open-source Hugging Face model and export a markdown report for your GitHub profile or project README.
+Run a Seatbelt audit against a hosted open model (default: Groq `llama-3.3-70b-versatile`) and export a markdown report for your GitHub profile or project README.
 
 **Open the hosted demo:** [Colab notebook](https://colab.research.google.com/drive/1yk3Sw7wAUVbBXzVJU5_DHprIPUYTiWIf?usp=sharing)
 
@@ -12,8 +12,15 @@ The same notebook lives in this repo at [`open_llm_audit.ipynb`](./open_llm_audi
 
 **What you need**
 
-- Free [Hugging Face token](https://huggingface.co/settings/tokens) (read access)
-- ~5–15 minutes on Colab free tier (default `probe_budget=8`)
+- Free [Groq API key](https://console.groq.com/keys) (store as Colab secret `GROQ_API_KEY`, or paste when prompted)
+- ~5–15 minutes on Colab free tier (demo uses `probe_budget=15`)
+
+**What the notebook does**
+
+1. `pip install seatbelt huggingface_hub groq`
+2. Build a `model_fn(prompt) -> str` wrapper around Groq
+3. Run `audit(model_fn=..., config=AuditConfig(...))`
+4. Print probe-level results, then save:
 
 **Outputs** (download from Colab, or `local_outputs/colab/` on a local run — **never commit these**)
 

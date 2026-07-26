@@ -76,11 +76,11 @@ if report.has_failures():
 
 ## Try it in Colab
 
-Audit an open-source Hugging Face model and export a markdown report for your GitHub profile:
+Audit a hosted open model via Groq (default: `llama-3.3-70b-versatile`) and export a markdown report for your GitHub profile:
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1yk3Sw7wAUVbBXzVJU5_DHprIPUYTiWIf?usp=sharing)
 
-See [`examples/colab/README.md`](examples/colab/README.md) for setup (free HF token only).
+See [`examples/colab/README.md`](examples/colab/README.md) for setup (free [Groq API key](https://console.groq.com/keys) required).
 
 ---
 
@@ -174,7 +174,7 @@ config = AuditConfig(
 
     # Stricter thresholds for high-stakes use cases
     pass_threshold=0.80,   # default: 0.90
-    warn_threshold=0.65,   # default: 0.65
+    warn_threshold=0.63,   # default: 0.63
 
     # Which regulations to check against
     regulations=["eu_ai_act", "nyc_ll144", "nist_rmf"],
@@ -184,9 +184,11 @@ config = AuditConfig(
     run_fairness=True,
     run_sociotech=True,
     run_regulatory=True,
+    run_transparency=True,
+    run_privacy=True,
 
-    # Reduce probe count for faster CI runs
-    probe_budget=20,  # default: 50
+    # Reduce probe count for faster CI / Colab runs
+    probe_budget=20,  # default: 50; Colab demo uses 15
 
     verbose=True,
 )
@@ -235,6 +237,16 @@ This runs a deliberately flawed mock model through a full audit so you can see S
 ## Supported model interfaces
 
 ```python
+# Groq (used in the Colab demo)
+from groq import Groq
+client = Groq()
+model_fn = lambda p: client.chat.completions.create(
+    model="llama-3.3-70b-versatile",
+    messages=[{"role": "user", "content": p}],
+    max_tokens=512,
+    temperature=0.0,
+).choices[0].message.content
+
 # OpenAI
 import openai
 client = openai.OpenAI()
