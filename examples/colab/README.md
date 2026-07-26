@@ -2,9 +2,13 @@
 
 ## Open LLM audit demo
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mishi93999/seatbelt/blob/main/examples/colab/open_llm_audit.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1yk3Sw7wAUVbBXzVJU5_DHprIPUYTiWIf?usp=sharing)
 
 Run a Seatbelt audit on an open-source Hugging Face model and export a markdown report for your GitHub profile or project README.
+
+**Open the hosted demo:** [Colab notebook](https://colab.research.google.com/drive/1yk3Sw7wAUVbBXzVJU5_DHprIPUYTiWIf?usp=sharing)
+
+The same notebook lives in this repo at [`open_llm_audit.ipynb`](./open_llm_audit.ipynb) if you prefer to run it locally or open it from GitHub.
 
 **What you need**
 
@@ -24,7 +28,7 @@ Use values from your run’s `seatbelt_about_snippet.json`:
 ```markdown
 ## Responsible AI audit
 
-Audited with [Seatbelt](https://github.com/mishi93999/seatbelt) · [Open the Colab demo](https://colab.research.google.com/github/mishi93999/seatbelt/blob/main/examples/colab/open_llm_audit.ipynb)
+Audited with [Seatbelt](https://github.com/o-rai/seatbelt) · [Open the Colab demo](https://colab.research.google.com/drive/1yk3Sw7wAUVbBXzVJU5_DHprIPUYTiWIf?usp=sharing)
 
 | Model | Overall |
 |-------|---------|

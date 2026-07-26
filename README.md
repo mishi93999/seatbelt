@@ -6,7 +6,7 @@ Make sure your AI models are safeguarded with seatbelts, buckle up!
 
 [![PyPI](https://img.shields.io/pypi/v/seatbelt)](https://pypi.org/project/seatbelt/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![Tests](https://github.com/mishi93999/seatbelt/actions/workflows/test.yml/badge.svg)](https://github.com/mishi93999/seatbelt/actions)
+[![Tests](https://github.com/o-rai/seatbelt/actions/workflows/test.yml/badge.svg)](https://github.com/o-rai/seatbelt/actions)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/)
 
 ---
@@ -78,7 +78,7 @@ if report.has_failures():
 
 Audit an open-source Hugging Face model and export a markdown report for your GitHub profile:
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mishi93999/seatbelt/blob/main/examples/colab/open_llm_audit.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1yk3Sw7wAUVbBXzVJU5_DHprIPUYTiWIf?usp=sharing)
 
 See [`examples/colab/README.md`](examples/colab/README.md) for setup (free HF token only).
 
@@ -313,7 +313,7 @@ If you use Seatbelt in research, please cite:
 @software{seatbelt2025,
   title  = {Seatbelt: Responsible AI Auditing for LLMs and SLMs},
   year   = {2025},
-  url    = {https://github.com/mishi93999/seatbelt},
+  url    = {https://github.com/o-rai/seatbelt},
 }
 ```
 

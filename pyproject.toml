@@ -45,10 +45,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/mishi93999/seatbelt"
-Documentation = "https://github.com/mishi93999/seatbelt#readme"
-Repository = "https://github.com/mishi93999/seatbelt"
-"Bug Tracker" = "https://github.com/mishi93999/seatbelt/issues"
+Homepage = "https://github.com/o-rai/seatbelt"
+Documentation = "https://github.com/o-rai/seatbelt#readme"
+Repository = "https://github.com/o-rai/seatbelt"
+"Bug Tracker" = "https://github.com/o-rai/seatbelt/issues"
 
 [project.scripts]
 seatbelt = "seatbelt.cli:main"
